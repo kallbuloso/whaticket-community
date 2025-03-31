@@ -17,11 +17,11 @@ services:
       - JWT_SECRET=${JWT_SECRET:-3123123213123}
       - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET:-75756756756}
       - BACKEND_URL=${BACKEND_URL:-http://localhost}
-      - FRONTEND_URL=${FRONTEND_URL:-http://localhost:3000}
+      - FRONTEND_URL=${FRONTEND_URL:-http://localhost:3100}
       - PROXY_PORT=${PROXY_PORT:-8080}
       - CHROME_ARGS=--no-sandbox --disable-setuid-sandbox
     ports:
-      - ${BACKEND_PORT:-8080}:3000
+      - ${BACKEND_PORT:-8080}:3100
     volumes:
       - ./backend/public/:/usr/src/app/public/
       - ./backend/.wwebjs_auth/:/usr/src/app/.wwebjs_auth/
@@ -30,13 +30,13 @@ services:
 
   frontend:
     ports:
-      - ${FRONTEND_PORT:-3000}:80
-      - ${FRONTEND_SSL_PORT:-3001}:443
+      - ${FRONTEND_PORT:-3100}:80
+      - ${FRONTEND_SSL_PORT:-3101}:443
     build:
       context: ./frontend
       dockerfile: ./Dockerfile
     environment:
-      - URL_BACKEND=backend:3000
+      - URL_BACKEND=backend:3100
       - REACT_APP_BACKEND_URL=${BACKEND_URL:-http://localhost}:${PROXY_PORT:-8080}/
       - FRONTEND_SERVER_NAME=${FRONTEND_SERVER_NAME}
       - BACKEND_SERVER_NAME=${BACKEND_SERVER_NAME}
@@ -56,7 +56,7 @@ services:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-strongpassword}
       - TZ=${TZ:-America/Fortaleza}
     ports:
-      - ${MYSQL_PORT:-3306}:3306
+      - ${MYSQL_PORT:-3307}:3307
     restart: always
     networks:
       - whaticket
